@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Denso Digital Twin</title>
+
+  <script src="../lib/aframe-v1.5.0.min.js"></script>
+  <script src="../lib/aframe-extras.controls.min.js"></script>
+  <script src="../lib/mqtt.min.js"> </script>
+  <script src="./scripts/util.js"> </script>
+</head>
+
+<body>
+  <a-scene renderer="antialias: true;" id="#scene" inspector-plugin-recast>
+    <a-entity
+      movement-controls="speed: 0.2; camera: #camera;"
+      position="0 0 0"
+      id="#player">
+
+      <a-entity 
+        camera="near:0.01;" 
+        look-controls
+        fov="100" 
+        id="#camera" 
+        position="0 1.65 0">
+      </a-entity>
+
+      <a-entity 
+        id="leftController"  
+        oculus-touch-controls="hand: left;"
+        denso_controller>
+        <a-entity 
+          cursor="fuse: true; fuseTimeout: 500" position="0 0 -.1"
+          geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03" 
+          material="color: gray; shader: flat"
+          raycaster="objects: .clicable; showLine: true; far: 100; lineColor: white; lineOpacity: 0.5">
+        </a-entity>
+      </a-entity>
+
+      <a-entity 
+        id="rightController"
+        oculus-touch-controls="hand: right;" 
+        denso_controller 
+        thumbstick-logging-right>
+        <a-entity 
+          cursor="fuse: true; fuseTimeout: 500" position="0 0 -.1"
+          geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03" 
+          material="color: gray; shader: flat"
+          raycaster="objects: .clicable; showLine: true; far: 100; lineColor: white; lineOpacity: 0.5">
+        </a-entity>
+      </a-entity>
+    </a-entity>
+
+    <!-- Assets -->
+    <a-assets>
+      <a-asset-item id="factory-gltf" src="./assets/factory/Factory.gltf"></a-asset-item>
+      <a-asset-item id="base-gltf" src="./assets/base.gltf"></a-asset-item>
+      <a-asset-item id="connectore-gltf" src="./assets/connectore.gltf"></a-asset-item>
+      <a-asset-item id="cable-gltf" src="./assets/cable.gltf"></a-asset-item>
+      <a-asset-item id="J0-gltf" src="./assets/J0.gltf"></a-asset-item>
+      <a-asset-item id="L0-gltf" src="./assets/L0.gltf"></a-asset-item>
+      <a-asset-item id="J1-gltf" src="./assets/J1.gltf"></a-asset-item>
+      <a-asset-item id="L1-gltf" src="./assets/L1.gltf"></a-asset-item>
+      <a-asset-item id="J2-gltf" src="./assets/J2.gltf"></a-asset-item>
+      <a-asset-item id="L2-gltf" src="./assets/L2.gltf"></a-asset-item>
+      <a-asset-item id="J3-gltf" src="./assets/J3.gltf"></a-asset-item>
+      <a-asset-item id="L3-gltf" src="./assets/L3.gltf"></a-asset-item>
+      <a-asset-item id="J4-gltf" src="./assets/J4.gltf"></a-asset-item>
+      <a-asset-item id="L4_1-gltf" src="./assets/L4_1.gltf"></a-asset-item>
+      <a-asset-item id="L4_2-gltf" src="./assets/L4_2.gltf"></a-asset-item>
+      <a-asset-item id="J5-gltf" src="./assets/J5.gltf"></a-asset-item>
+      <img id="arrowImage" src="./img/arrow.png">
+      <img id="jointsImage" src="./img/joint.png">
+      <img id="toolImage" src="./img/tool.png">
+    </a-assets>
+
+    <a-entity id='#base' position="1.907 0.425 -3.128" gltf-model="#base-gltf" scale="0.0075 0.0075 0.0075">
+      <a-entity id='#J0' position="0.0 0.0 0.0" gltf-model="#J0-gltf" scale="1.0 1.0 1.0">
+        <a-entity id='#L0' position="0.0 0.0 0.0" gltf-model="#L0-gltf" scale="1.0 1.0 1.0"></a-entity>
+        <a-entity id='#J1' position="0.0 35.43 0.0" gltf-model="#J1-gltf" scale="1.0 1.0 1.0">
+          <a-entity id='#L1' position="0.0 0.0 0.0" gltf-model="#L1-gltf" scale="1.0 1.0 1.0"></a-entity>
+          <a-entity id='#J2' position="0.0 69.628 0.0" gltf-model="#J2-gltf" scale="1.0 1.0 1.0">
+            <a-entity id='#L2' position="0.0 0.0 0.0" gltf-model="#L2-gltf" scale="1.0 1.0 1.0"></a-entity>
+            <a-entity id='#J3' position="-44.247 23.263 0.0" gltf-model="#J3-gltf" scale="1.0 1.0 1.0">
+              <a-entity id='#L3' position="0.0 0.0 0.0" gltf-model="#L3-gltf" scale="1.0 1.0 1.0"></a-entity>
+              <a-entity id='#J4' position="-19.150 0.0 0.0" gltf-model="#J4-gltf" scale="1.0 1.0 1.0">
+                <a-entity id='#L4_1' position="0.0 0.0 0.0" gltf-model="#L4_1-gltf" scale="1.0 1.0 1.0"></a-entity>
+                <a-entity id='#L4_2' position="-17.682 0.0 0.0" gltf-model="#L4_2-gltf" scale="1.0 1.0 1.0"></a-entity>
+                <a-entity id='#J5' position="0.0 0.0 0.0" gltf-model="#J5-gltf" scale="1.0 1.0 1.0">
+                  </a-entity>
+                </a-entity>
+              </a-entity>
+            </a-entity>
+          </a-entity>
+        </a-entity>
+      </a-entity>
+      <a-entity id='#connectore' position="1.907 0.425 -3.128" gltf-model="#connectore-gltf" scale="0.0075 0.0075 0.0075">
+        <a-entity id='#cable' position="0.0 0.0 0.0" gltf-model="#cable-gltf" scale="1.0 1.0 1.0"></a-entity>
+      </a-entity>
+    </a-entity>
+
+    <a-entity id="stateText" text="value: Current Mode[Joint Control]; align:center;" position="-1.466 2.050 -3.572" scale="3 3 1"></a-entity>
+
+    <a-entity text="value: Joints; align:center;" position="-2.318 2.853 -3.572" scale="3 3 1"></a-entity>
+    <a-entity id="jointModeButton" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-2.252 2.479 -3.572" material="color:blue">
+      <a-image src="#jointsImage" position="0 0 0.156" rotation="0 0 0" scale="0.2 0.2 0.3"></a-image>
+    </a-entity>
+    <a-entity text="value: Tool; align:center;" position="-0.784 2.853 -3.572" scale="3 3 1"></a-entity>
+    <a-entity id="toolModeButton" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-0.739 2.479 -3.572" material="color:purple">
+      <a-image src="#toolImage" position="0 0 0.156" rotation="0 0 0" scale="0.2 0.2 0.3"></a-image>
+    </a-entity>
+    <!-- <a-entity id="decreaseText" text="value: decrease - 10; align:center;" position="0 0 0" scale="3 3 1"></a-entity> -->
+
+    <!-- J0 - Rotate Y -->
+    <a-entity id="text_j0" text="value: J0[0]; align:center;" position="-3.343 0.950 -3.572" scale="3 3 3"></a-entity>
+    <a-entity id="increase_j0" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-3.335 1.434 -3.572" material="color:green">
+      <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 90" scale="0.3 0.3 0.3"></a-image>
+    </a-entity>
+    <a-entity id="decrease_j0" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-3.335 0.434 -3.572" material="color:red">
+      <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 -90" scale="0.3 0.3 0.3"></a-image>
+    </a-entity>
+
+    <!-- J1 - Rotate Z -->
+    <a-entity id="text_j1" text="value: J1[0]; align:center;" position="-2.620 0.950 -3.572" scale="3 3 3"></a-entity>
+    <a-entity id="increase_j1" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-2.620 1.434 -3.572" material="color:green">
+      <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 90" scale="0.3 0.3 0.3"></a-image>
+    </a-entity>
+    <a-entity id="decrease_j1" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-2.620 0.434 -3.572" material="color:red">
+      <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 -90" scale="0.3 0.3 0.3"></a-image>
+    </a-entity>
+
+    <!-- J2 - Rotate Z -->
+    <a-entity id="text_j2" text="value: J2[0]; align:center;" position="-1.905 0.950 -3.572" scale="3 3 3"></a-entity>
+    <a-entity id="increase_j2" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-1.905 1.434 -3.572" material="color:green">
+      <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 90" scale="0.3 0.3 0.3"></a-image>
+    </a-entity>
+    <a-entity id="decrease_j2" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-1.905 0.434 -3.572" material="color:red">
+      <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 -90" scale="0.3 0.3 0.3"></a-image>
+    </a-entity>
+
+    <!-- J3 - Rotate X -->
+    <a-entity id="text_j3" text="value: J3[0]; align:center;" position="-1.190 0.950 -3.572" scale="3 3 3"></a-entity>
+    <a-entity id="increase_j3" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-1.190 1.434 -3.572" material="color:green">
+      <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 90" scale="0.3 0.3 0.3"></a-image>
+    </a-entity>
+    <a-entity id="decrease_j3" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-1.190 0.434 -3.572" material="color:red">
+      <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 -90" scale="0.3 0.3 0.3"></a-image>
+    </a-entity>
+
+    <!-- J4 - Rotate Z -->
+    <a-entity id="text_j4" text="value: J4[0]; align:center;" position="-0.475 0.950 -3.572" scale="3 3 3"></a-entity>
+    <a-entity id="increase_j4" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-0.475 1.434 -3.572" material="color:green">
+      <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 90" scale="0.3 0.3 0.3"></a-image>
+    </a-entity>
+    <a-entity id="decrease_j4" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-0.475 0.434 -3.572" material="color:red">
+      <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 -90" scale="0.3 0.3 0.3"></a-image>
+    </a-entity>
+
+    <!-- J5 - Rotate X -->
+    <a-entity id="text_j5" text="value: J5[0]; align:center;" position="0.240 0.950 -3.572" scale="3 3 3"></a-entity>
+    <a-entity id="increase_j5" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="0.240 1.434 -3.572" material="color:green">
+      <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 90" scale="0.3 0.3 0.3"></a-image>
+    </a-entity>
+    <a-entity id="decrease_j5" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="0.240 0.434 -3.572" material="color:red">
+      <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 -90" scale="0.3 0.3 0.3"></a-image>
+    </a-entity>
+
+    
+    <!-- Light -->
+    <a-entity light="type: ambient; color: #FFF"></a-entity>
+    <a-entity light="type: directional; color: #FFF; intensity: 0.4" position="-97.34494 193.3416 44.09198"></a-entity>
+    <a-entity light="type: directional; color: #FFF; intensity: 0.4" position="7.9 172.07933 326.81421"></a-entity>
+
+    <!-- Misc -->
+    <a-sky color="#292928"></a-sky>
+    <!-- <a-entity id="factory" gltf-model="#factory-gltf" position="0 0 0" rotation="0 0 0" scale="1 1 1"></a-entity> -->
+  </a-scene>
+</body>
+
+<script src="./scripts/controller.js"> </script>
+
+</html>
