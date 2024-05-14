@@ -23,7 +23,7 @@ class DensoSimul():
         # Filling the lists of joints variables
         joints_pos = []
         for i in range(6):
-            joints_pos.append(str(sim.getJointPosition(self.joints_handles[i])))
+            joints_pos.append(sim.getJointPosition(self.joints_handles[i]))
 
         return joints_pos
     
@@ -100,9 +100,9 @@ def on_message(client, userdata, msg):
         print(f"Received new tool move command: {decoded_msg}")
         # How the tool should move (vertical vector)
         move_vector = np.array(list(map(float, decoded_msg.split(',')))).reshape(-1, 1)
-        
+        print(self.curr_joints)
         # Getting jacobian for the current configuration
-        J = self.compute_jacobian(self.curr_joints)
+        J = self.denso.compute_jacobian(self.curr_joints)
 
         # Regularized inverse jacobian (to avoid singular values)
         J_inv = np.linalg.inv(J + 0.001**2 * np.eye(6))
@@ -130,7 +130,7 @@ def sysCall_init():
     self.client_name = sim.getObjectAlias(robot_handle)
     self.targetPos = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     self.denso = DensoSimul(joints_handle)
-    self.curr_joints = self.getJoints()
+    self.curr_joints = self.denso.getJoints()
     
     # Setting mqtt client and starting connection
     self.client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, self.client_name)
@@ -146,7 +146,8 @@ def sysCall_init():
     
 def sysCall_sensing():
     self.denso.curr_joints = self.denso.getJoints()
-    msg = ','.join(self.denso.curr_joints)
+    joint_str = list(map(str, self.denso.curr_joints))
+    msg = ','.join(joint_str)
     self.client.publish(self.client_name+"/joint_states", msg)
     
 def sysCall_actuation():
