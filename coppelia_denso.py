@@ -7,12 +7,12 @@ class DensoSimul():
 
         # Define DH parameters
         self.dh_params = [
-            {'theta': 'theta1', 'd': 0.280, 'a': 0, 'alpha': -np.pi / 2},
-            {'theta': 'theta2 - np.pi/2', 'd': 0, 'a': 0.210, 'alpha': 0},
-            {'theta': 'theta3 + np.pi', 'd': 0, 'a': -0.075, 'alpha': np.pi / 2},
-            {'theta': 'theta4', 'd': 0.210, 'a': 0, 'alpha': -np.pi / 2},
-            {'theta': 'theta5', 'd': 0, 'a': 0, 'alpha': np.pi / 2},
-            {'theta': 'theta6', 'd': 0.070, 'a': 0, 'alpha': 0}
+            {'theta_offset': 0, 'd': 0.280, 'a': 0, 'alpha': -np.pi / 2},
+            {'theta_offset': -np.pi/2, 'd': 0, 'a': 0.210, 'alpha': 0},
+            {'theta_offset': np.pi, 'd': 0, 'a': -0.075, 'alpha': np.pi / 2},
+            {'theta_offset': 0, 'd': 0.210, 'a': 0, 'alpha': -np.pi / 2},
+            {'theta_offset': 0, 'd': 0, 'a': 0, 'alpha': np.pi / 2},
+            {'theta_offset': 0, 'd': 0.070, 'a': 0, 'alpha': 0}
         ]
 
     def setJoints(self, joint_pos):
@@ -32,9 +32,7 @@ class DensoSimul():
         transformations = []
         
         for i, params in enumerate(self.dh_params):
-            theta = eval(params['theta'], {'theta1': joint_angles[0], 'theta2': joint_angles[1], 'theta3': joint_angles[2],
-                                        'theta4': joint_angles[3], 'theta5': joint_angles[4], 'theta6': joint_angles[5],
-                                        'np': np})
+            theta = joint_angles[i] + params['theta_offset']
             d = params['d']
             a = params['a']
             alpha = params['alpha']
@@ -45,6 +43,7 @@ class DensoSimul():
                 [0, 0, 0, 1]
             ])
             T = np.dot(T, T_i)
+            
             transformations.append(T)
         
         return transformations
@@ -56,8 +55,11 @@ class DensoSimul():
         
         J = np.zeros((6, 6))
         
-        for i in range(6):
-            T_i = transformations[i]
+        J[:3, 0] = np.cross(np.array([0, 0, 1]), p_end_effector)
+        J[3:, 0] = np.array([0, 0, 1])
+
+        for i in range(1, 6):
+            T_i = transformations[i-1]
             z_i = T_i[:3, 2]
             p_i = T_i[:3, 3]
             
@@ -100,17 +102,19 @@ def on_message(client, userdata, msg):
         print(f"Received new tool move command: {decoded_msg}")
         # How the tool should move (vertical vector)
         move_vector = np.array(list(map(float, decoded_msg.split(',')))).reshape(-1, 1)
-        print(self.curr_joints)
+
         # Getting jacobian for the current configuration
         J = self.denso.compute_jacobian(self.curr_joints)
 
         # Regularized inverse jacobian (to avoid singular values)
-        J_inv = np.linalg.inv(J + 0.001**2 * np.eye(6))
+        J_inv = J.T @ np.linalg.inv(J @ J.T + 0.01**2 * np.eye(6))
+        #J_inv = np.linalg.inv(J)
 
         # Computing the joints velocities
         q_dot = J_inv @ move_vector
-
+        
         q_new = np.array(self.curr_joints) + q_dot.flatten() * 0.05
+
         self.targetPos = q_new.tolist()
 
 def sysCall_init():
@@ -145,8 +149,8 @@ def sysCall_init():
     self.client.loop(0.01) # For the on_connect callback function to run, it needs a mqtt client loop
     
 def sysCall_sensing():
-    self.denso.curr_joints = self.denso.getJoints()
-    joint_str = list(map(str, self.denso.curr_joints))
+    self.curr_joints = self.denso.getJoints()
+    joint_str = list(map(str, self.curr_joints))
     msg = ','.join(joint_str)
     self.client.publish(self.client_name+"/joint_states", msg)
     
