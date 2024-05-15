@@ -54,7 +54,7 @@
 
     <!-- Assets -->
     <a-assets>
-      <a-asset-item id="factory-gltf" src="./assets/factory/Factory.gltf"></a-asset-item>
+      <a-asset-item id="factory-gltf" src="./assets/factory.gltf"></a-asset-item>
       <a-asset-item id="base-gltf" src="./assets/base.gltf"></a-asset-item>
       <a-asset-item id="connectore-gltf" src="./assets/connectore.gltf"></a-asset-item>
       <a-asset-item id="cable-gltf" src="./assets/cable.gltf"></a-asset-item>
@@ -75,7 +75,7 @@
       <img id="toolImage" src="./img/tool.png">
     </a-assets>
 
-    <a-entity id='#base' position="1.907 0.425 -3.128" gltf-model="#base-gltf" scale="0.0075 0.0075 0.0075">
+    <a-entity id='#base' position="2.023 1.309 -2.703" rotation="0 90 0" gltf-model="#base-gltf" scale="0.0075 0.0075 0.0075">
       <a-entity id='#J0' position="0.0 0.0 0.0" gltf-model="#J0-gltf" scale="1.0 1.0 1.0">
         <a-entity id='#L0' position="0.0 0.0 0.0" gltf-model="#L0-gltf" scale="1.0 1.0 1.0"></a-entity>
         <a-entity id='#J1' position="0.0 35.43 0.0" gltf-model="#J1-gltf" scale="1.0 1.0 1.0">
@@ -85,9 +85,9 @@
             <a-entity id='#J3' position="-44.247 23.263 0.0" gltf-model="#J3-gltf" scale="1.0 1.0 1.0">
               <a-entity id='#L3' position="0.0 0.0 0.0" gltf-model="#L3-gltf" scale="1.0 1.0 1.0"></a-entity>
               <a-entity id='#J4' position="-19.150 0.0 0.0" gltf-model="#J4-gltf" scale="1.0 1.0 1.0">
-                <a-entity id='#L4_1' position="0.0 0.0 0.0" gltf-model="#L4_1-gltf" scale="1.0 1.0 1.0"></a-entity>
-                <a-entity id='#L4_2' position="-17.682 0.0 0.0" gltf-model="#L4_2-gltf" scale="1.0 1.0 1.0"></a-entity>
+                <a-entity id='#L4' position="0.0 0.0 0.0" gltf-model="#L4_1-gltf" scale="1.0 1.0 1.0"></a-entity>
                 <a-entity id='#J5' position="0.0 0.0 0.0" gltf-model="#J5-gltf" scale="1.0 1.0 1.0">
+                  <a-entity id='#L5' position="-17.847 0.0 0.0" gltf-model="#L4_2-gltf" scale="1.0 1.0 1.0"></a-entity>
                   </a-entity>
                 </a-entity>
               </a-entity>
@@ -95,7 +95,7 @@
           </a-entity>
         </a-entity>
       </a-entity>
-      <a-entity id='#connectore' position="1.907 0.425 -3.128" gltf-model="#connectore-gltf" scale="0.0075 0.0075 0.0075">
+      <a-entity id='#connectore' position="2.023 1.309 -2.703" rotation="0 90 0" gltf-model="#connectore-gltf" scale="0.0075 0.0075 0.0075">
         <a-entity id='#cable' position="0.0 0.0 0.0" gltf-model="#cable-gltf" scale="1.0 1.0 1.0"></a-entity>
       </a-entity>
     </a-entity>
@@ -168,13 +168,13 @@
 
     
     <!-- Light -->
-    <a-entity light="type: ambient; color: #FFF"></a-entity>
-    <a-entity light="type: directional; color: #FFF; intensity: 0.4" position="-97.34494 193.3416 44.09198"></a-entity>
-    <a-entity light="type: directional; color: #FFF; intensity: 0.4" position="7.9 172.07933 326.81421"></a-entity>
+    <a-entity light="type: ambient; color: #FFF; intensity: 1.0" position="0 6.107 0"></a-entity>
+    <a-entity light="type: directional; color: #FFF; intensity: 0.8" position="-8.204 5.117 10.349"></a-entity>
+    <a-entity light="type: directional; color: #FFF; intensity: 0.8" position="-3.652 -0.750 -129.433"></a-entity>
 
     <!-- Misc -->
     <a-sky color="#292928"></a-sky>
-    <!-- <a-entity id="factory" gltf-model="#factory-gltf" position="0 0 0" rotation="0 0 0" scale="1 1 1"></a-entity> -->
+    <a-entity id="factory" gltf-model="#factory-gltf" position="-2.527 0.011 -2.385" rotation="0 -90 0" scale="1 1 1"></a-entity>
   </a-scene>
 </body>
 
