@@ -38,19 +38,21 @@ client.on('connect', function () {
 )
 
 client.on('message', function (topic, message) {
+  // console.log(topic, message)
   const stringMsg = message.toString();
   const arrayMsg = stringMsg.split(',').map(Number);
 
   const fomartedArrayMsg = arrayMsg.map(num => {
     // Limitar rotação no if
     if (!isNaN(num)) {
-      return parseFloat(num.toFixed(2));
+      return (parseFloat(num) * 180/Math.PI).toFixed(2);
     } else {
       return num;
     }
   });
   jointsPosition = fomartedArrayMsg
   updateJoints(fomartedArrayMsg)
+  updateHUD(state)
 })
 
 function onTriggerDown(e){
@@ -102,6 +104,7 @@ function onTriggerDown(e){
 
 // Apply rotation into A-frame
 function updateJoints(jointsPosition){
+  // console.log(jointsPosition)
   changeRotation(j0Object, {x:0, y:jointsPosition[0], z:0})
   changeRotation(j1Object, {x:0, y:0, z:jointsPosition[1]})
   changeRotation(j2Object, {x:0, y:0, z:jointsPosition[2]})

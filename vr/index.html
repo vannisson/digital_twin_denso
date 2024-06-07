@@ -76,15 +76,15 @@
     </a-assets>
 
     <a-entity id='#base' position="2.023 1.309 -2.703" rotation="0 90 0" gltf-model="#base-gltf" scale="0.0075 0.0075 0.0075">
-      <a-entity id='#J0' position="0.0 0.0 0.0" gltf-model="#J0-gltf" scale="1.0 1.0 1.0">
+      <a-entity id='#J0' rotation="0 1.490 0" position="0.0 0.0 0.0" gltf-model="#J0-gltf" scale="1.0 1.0 1.0">
         <a-entity id='#L0' position="0.0 0.0 0.0" gltf-model="#L0-gltf" scale="1.0 1.0 1.0"></a-entity>
-        <a-entity id='#J1' position="0.0 35.43 0.0" gltf-model="#J1-gltf" scale="1.0 1.0 1.0">
+        <a-entity id='#J1' rotation="0 0 45.470" position="0.0 35.43 0.0" gltf-model="#J1-gltf" scale="1.0 1.0 1.0">
           <a-entity id='#L1' position="0.0 0.0 0.0" gltf-model="#L1-gltf" scale="1.0 1.0 1.0"></a-entity>
-          <a-entity id='#J2' position="0.0 69.628 0.0" gltf-model="#J2-gltf" scale="1.0 1.0 1.0">
+          <a-entity id='#J2'  rotation="0 0 -20.000" position="0.0 69.628 0.0" gltf-model="#J2-gltf" scale="1.0 1.0 1.0">
             <a-entity id='#L2' position="0.0 0.0 0.0" gltf-model="#L2-gltf" scale="1.0 1.0 1.0"></a-entity>
-            <a-entity id='#J3' position="-44.247 23.263 0.0" gltf-model="#J3-gltf" scale="1.0 1.0 1.0">
+            <a-entity id='#J3' rotation="-0.010 0 0.0" position="-44.247 23.263 0.0" gltf-model="#J3-gltf" scale="1.0 1.0 1.0">
               <a-entity id='#L3' position="0.0 0.0 0.0" gltf-model="#L3-gltf" scale="1.0 1.0 1.0"></a-entity>
-              <a-entity id='#J4' position="-19.150 0.0 0.0" gltf-model="#J4-gltf" scale="1.0 1.0 1.0">
+              <a-entity id='#J4' rotation="0 0 13.390" position="-19.150 0.0 0.0" gltf-model="#J4-gltf" scale="1.0 1.0 1.0">
                 <a-entity id='#L4' position="0.0 0.0 0.0" gltf-model="#L4_1-gltf" scale="1.0 1.0 1.0"></a-entity>
                 <a-entity id='#J5' position="0.0 0.0 0.0" gltf-model="#J5-gltf" scale="1.0 1.0 1.0">
                   <a-entity id='#L5' position="-17.847 0.0 0.0" gltf-model="#L4_2-gltf" scale="1.0 1.0 1.0"></a-entity>
@@ -113,7 +113,7 @@
     <!-- <a-entity id="decreaseText" text="value: decrease - 10; align:center;" position="0 0 0" scale="3 3 1"></a-entity> -->
 
     <!-- J0 - Rotate Y -->
-    <a-entity id="text_j0" text="value: J0[0]; align:center;" position="-3.343 0.950 -3.572" scale="3 3 3"></a-entity>
+    <a-entity id="text_j0" text="value: J0[1.49]; align:center;" position="-3.343 0.950 -3.572" scale="3 3 3"></a-entity>
     <a-entity id="increase_j0" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-3.335 1.434 -3.572" material="color:green">
       <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 90" scale="0.3 0.3 0.3"></a-image>
     </a-entity>
@@ -122,7 +122,7 @@
     </a-entity>
 
     <!-- J1 - Rotate Z -->
-    <a-entity id="text_j1" text="value: J1[0]; align:center;" position="-2.620 0.950 -3.572" scale="3 3 3"></a-entity>
+    <a-entity id="text_j1" text="value: J1[45.47]; align:center;" position="-2.620 0.950 -3.572" scale="3 3 3"></a-entity>
     <a-entity id="increase_j1" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-2.620 1.434 -3.572" material="color:green">
       <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 90" scale="0.3 0.3 0.3"></a-image>
     </a-entity>
@@ -131,7 +131,7 @@
     </a-entity>
 
     <!-- J2 - Rotate Z -->
-    <a-entity id="text_j2" text="value: J2[0]; align:center;" position="-1.905 0.950 -3.572" scale="3 3 3"></a-entity>
+    <a-entity id="text_j2" text="value: J2[-20.00]; align:center;" position="-1.905 0.950 -3.572" scale="3 3 3"></a-entity>
     <a-entity id="increase_j2" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-1.905 1.434 -3.572" material="color:green">
       <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 90" scale="0.3 0.3 0.3"></a-image>
     </a-entity>
@@ -140,7 +140,7 @@
     </a-entity>
 
     <!-- J3 - Rotate X -->
-    <a-entity id="text_j3" text="value: J3[0]; align:center;" position="-1.190 0.950 -3.572" scale="3 3 3"></a-entity>
+    <a-entity id="text_j3" text="value: J3[-0.01]; align:center;" position="-1.190 0.950 -3.572" scale="3 3 3"></a-entity>
     <a-entity id="increase_j3" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-1.190 1.434 -3.572" material="color:green">
       <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 90" scale="0.3 0.3 0.3"></a-image>
     </a-entity>
@@ -149,7 +149,7 @@
     </a-entity>
 
     <!-- J4 - Rotate Z -->
-    <a-entity id="text_j4" text="value: J4[0]; align:center;" position="-0.475 0.950 -3.572" scale="3 3 3"></a-entity>
+    <a-entity id="text_j4" text="value: J4[13.39]; align:center;" position="-0.475 0.950 -3.572" scale="3 3 3"></a-entity>
     <a-entity id="increase_j4" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="-0.475 1.434 -3.572" material="color:green">
       <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 90" scale="0.3 0.3 0.3"></a-image>
     </a-entity>
@@ -158,7 +158,7 @@
     </a-entity>
 
     <!-- J5 - Rotate X -->
-    <a-entity id="text_j5" text="value: J5[0]; align:center;" position="0.240 0.950 -3.572" scale="3 3 3"></a-entity>
+    <a-entity id="text_j5" text="value: J5[0.01]; align:center;" position="0.240 0.950 -3.572" scale="3 3 3"></a-entity>
     <a-entity id="increase_j5" class="clicable" clicable geometry="primitive:box; width: 0.3; height: 0.3; depth: 0.3" position="0.240 1.434 -3.572" material="color:green">
       <a-image src="#arrowImage" position="0 0 0.156" rotation="0 0 90" scale="0.3 0.3 0.3"></a-image>
     </a-entity>
